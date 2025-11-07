@@ -53,10 +53,10 @@ flowchart TD
     D["Native Shared Library<br/>(packages/native/src/wrapper.zig)<br/>• C ABI exports<br/>• Memory management<br/>• Callback bridging"]
     E["Capy UI Framework<br/>(github.com/capy-ui/capy)<br/>• Native UI controls<br/>• Platform backends (Win32/GTK/AppKit)"]
     
-    A -->|import| B
-    B -->|Bun Worker (postMessage)| C
-    C -->|Bun FFI (dlopen)| D
-    D -->|Zig imports| E
+    A -->|"import"| B
+    B -->|"Bun Worker (postMessage)"| C
+    C -->|"Bun FFI (dlopen)"| D
+    D -->|"Zig imports"| E
 ```
 
 ## Example Code
