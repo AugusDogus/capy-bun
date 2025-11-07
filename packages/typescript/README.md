@@ -223,37 +223,27 @@ See: [Zig's allocator documentation](https://ziglang.org/documentation/master/#C
 
 This library uses a multi-threaded architecture to keep your JavaScript responsive:
 
-```
-┌───────────────────────────────────┐
-│    Main JavaScript Thread         │
-│  (Your application code here)     │
-│                                   │
-│  ┌────────────────────────────┐  │
-│  │  TypeScript API Layer      │  │
-│  │  (Window, Label, Button)   │  │
-│  └─────────────┬──────────────┘  │
-│                │ postMessage      │
-└────────────────┼──────────────────┘
-                 │
-┌────────────────▼──────────────────┐
-│                                   │
-│  ┌────────────────────────────┐  │
-│  │    UI Worker Thread        │  │
-│  │  (Runs Capy event loop)    │  │
-│  │                            │  │
-│  │  ┌──────────────────────┐  │  │
-│  │  │ FFI Layer (bun:ffi)  │  │  │
-│  │  └──────────┬───────────┘  │  │
-│  │             ↓              │  │
-│  │  ┌──────────────────────┐  │  │
-│  │  │ Zig Wrapper (C ABI)  │  │  │
-│  │  └──────────┬───────────┘  │  │
-│  │             ↓              │  │
-│  │  ┌──────────────────────┐  │  │
-│  │  │  Capy UI (Native)    │  │  │
-│  │  └──────────────────────┘  │  │
-│  └────────────────────────────┘  │
-└───────────────────────────────────┘
+```mermaid
+flowchart TB
+    subgraph main["Main JavaScript Thread"]
+        A["Your Application Code"]
+        B["TypeScript API Layer<br/>(Window, Label, Button)"]
+        A --> B
+    end
+    
+    subgraph worker["UI Worker Thread"]
+        C["Worker Message Handler"]
+        D["FFI Layer (bun:ffi)"]
+        E["Zig Wrapper (C ABI)"]
+        F["Capy UI (Native)"]
+        
+        C --> D
+        D --> E
+        E --> F
+    end
+    
+    B -->|postMessage| C
+    C -->|callbacks| B
 ```
 
 **Key Benefits:**

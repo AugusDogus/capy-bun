@@ -1,6 +1,6 @@
 # Capy-Bun
 
-Build native, cross-platform desktop UIs with TypeScript and Bun. This monorepo provides TypeScript bindings for the [Capy UI framework](https://capy-ui.org/) using Bun's FFI.
+Build native, cross-platform desktop applications with TypeScript and Bun. Capy-Bun provides TypeScript bindings for the [Capy UI framework](https://capy-ui.org/) using Bun's FFI.
 
 ## What is this?
 
@@ -45,42 +45,18 @@ Quick links:
 
 ## Architecture
 
-```
-┌────────────────────────────────────────────────┐
-│          Your TypeScript App                   │
-│       (packages/typescript/examples)           │
-└───────────────────┬────────────────────────────┘
-                    │ import
-┌───────────────────▼────────────────────────────┐
-│         TypeScript API Layer                   │
-│      (packages/typescript/src/*.ts)            │
-│   • Window, Label, Button, TextField           │
-│   • Row, Column, Alignment                     │
-│   • Async/await API with Worker thread         │
-└───────────────────┬────────────────────────────┘
-                    │ Bun Worker (postMessage)
-┌───────────────────▼────────────────────────────┐
-│           UI Worker Thread                     │
-│    (packages/typescript/src/ui-worker.ts)      │
-│   • Runs Capy event loop                       │
-│   • Handles FFI calls                          │
-│   • Manages callbacks                          │
-└───────────────────┬────────────────────────────┘
-                    │ Bun FFI (dlopen)
-┌───────────────────▼────────────────────────────┐
-│        Native Shared Library                   │
-│     (packages/native/src/wrapper.zig)          │
-│   • C ABI exports                              │
-│   • Memory management                          │
-│   • Callback bridging                          │
-└───────────────────┬────────────────────────────┘
-                    │ Zig imports
-┌───────────────────▼────────────────────────────┐
-│          Capy UI Framework                     │
-│       (github.com/capy-ui/capy)                │
-│   • Native UI controls                         │
-│   • Platform backends (Win32/GTK/AppKit)       │
-└────────────────────────────────────────────────┘
+```mermaid
+flowchart TD
+    A["Your TypeScript App<br/>(packages/typescript/examples)"]
+    B["TypeScript API Layer<br/>(packages/typescript/src/*.ts)<br/>• Window, Label, Button, TextField<br/>• Row, Column, Alignment<br/>• Async/await API with Worker thread"]
+    C["UI Worker Thread<br/>(packages/typescript/src/ui-worker.ts)<br/>• Runs Capy event loop<br/>• Handles FFI calls<br/>• Manages callbacks"]
+    D["Native Shared Library<br/>(packages/native/src/wrapper.zig)<br/>• C ABI exports<br/>• Memory management<br/>• Callback bridging"]
+    E["Capy UI Framework<br/>(github.com/capy-ui/capy)<br/>• Native UI controls<br/>• Platform backends (Win32/GTK/AppKit)"]
+    
+    A -->|import| B
+    B -->|Bun Worker (postMessage)| C
+    C -->|Bun FFI (dlopen)| D
+    D -->|Zig imports| E
 ```
 
 ## Example Code
