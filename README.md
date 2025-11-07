@@ -46,22 +46,27 @@ Quick links:
 ## Architecture
 
 ```mermaid
-flowchart TD
-    A["Your TypeScript App"]:::app
-    B["TypeScript API"]:::ts
-    C["UI Worker Thread"]:::worker
-    D["Native Library (Zig)"]:::native
-    E["Capy UI Framework"]:::capy
+flowchart LR
+    subgraph main["Main Thread"]
+        A["Your App"]:::app
+        B["TypeScript API"]:::ts
+    end
     
-    A -->|"import"| B
-    B -->|"postMessage"| C
-    C -->|"FFI"| D
-    D -->|"calls"| E
+    subgraph worker["Worker Thread"]
+        C["FFI Layer"]:::ffi
+        D["Zig Wrapper"]:::zig
+        E["Capy UI"]:::capy
+    end
+    
+    A --> B
+    B <-->|"postMessage"| C
+    C --> D
+    D --> E
     
     classDef app fill:#3178c6,stroke:#235a97,color:#fff
     classDef ts fill:#3178c6,stroke:#235a97,color:#fff
-    classDef worker fill:#f88,stroke:#c44,color:#fff
-    classDef native fill:#f7a41d,stroke:#c47d15,color:#000
+    classDef ffi fill:#f88,stroke:#c44,color:#fff
+    classDef zig fill:#f7a41d,stroke:#c47d15,color:#000
     classDef capy fill:#7c3aed,stroke:#5b21b6,color:#fff
 ```
 
