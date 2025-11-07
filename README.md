@@ -47,16 +47,22 @@ Quick links:
 
 ```mermaid
 flowchart TD
-    A["Your TypeScript App<br/>(packages/typescript/examples)"]
-    B["TypeScript API Layer<br/>(packages/typescript/src/*.ts)<br/>• Window, Label, Button, TextField<br/>• Row, Column, Alignment<br/>• Async/await API with Worker thread"]
-    C["UI Worker Thread<br/>(packages/typescript/src/ui-worker.ts)<br/>• Runs Capy event loop<br/>• Handles FFI calls<br/>• Manages callbacks"]
-    D["Native Shared Library<br/>(packages/native/src/wrapper.zig)<br/>• C ABI exports<br/>• Memory management<br/>• Callback bridging"]
-    E["Capy UI Framework<br/>(github.com/capy-ui/capy)<br/>• Native UI controls<br/>• Platform backends (Win32/GTK/AppKit)"]
+    A["Your TypeScript App"]:::app
+    B["TypeScript API"]:::ts
+    C["UI Worker Thread"]:::worker
+    D["Native Library (Zig)"]:::native
+    E["Capy UI Framework"]:::capy
     
     A -->|"import"| B
-    B -->|"Bun Worker (postMessage)"| C
-    C -->|"Bun FFI (dlopen)"| D
-    D -->|"Zig imports"| E
+    B -->|"postMessage"| C
+    C -->|"FFI"| D
+    D -->|"calls"| E
+    
+    classDef app fill:#3178c6,stroke:#235a97,color:#fff
+    classDef ts fill:#3178c6,stroke:#235a97,color:#fff
+    classDef worker fill:#f88,stroke:#c44,color:#fff
+    classDef native fill:#f7a41d,stroke:#c47d15,color:#000
+    classDef capy fill:#7c3aed,stroke:#5b21b6,color:#fff
 ```
 
 ## Example Code

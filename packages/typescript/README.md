@@ -224,26 +224,28 @@ See: [Zig's allocator documentation](https://ziglang.org/documentation/master/#C
 This library uses a multi-threaded architecture to keep your JavaScript responsive:
 
 ```mermaid
-flowchart TB
-    subgraph main["Main JavaScript Thread"]
-        A["Your Application Code"]
-        B["TypeScript API Layer<br/>(Window, Label, Button)"]
-        A --> B
+flowchart LR
+    subgraph main["Main Thread"]
+        A["Your App"]:::app
+        B["TypeScript API"]:::ts
     end
     
-    subgraph worker["UI Worker Thread"]
-        C["Worker Message Handler"]
-        D["FFI Layer (bun:ffi)"]
-        E["Zig Wrapper (C ABI)"]
-        F["Capy UI (Native)"]
-        
-        C --> D
-        D --> E
-        E --> F
+    subgraph worker["Worker Thread"]
+        C["FFI Layer"]:::ffi
+        D["Zig Wrapper"]:::zig
+        E["Capy UI"]:::capy
     end
     
-    B -->|postMessage| C
-    C -->|callbacks| B
+    A --> B
+    B <-->|"postMessage"| C
+    C --> D
+    D --> E
+    
+    classDef app fill:#3178c6,stroke:#235a97,color:#fff
+    classDef ts fill:#3178c6,stroke:#235a97,color:#fff
+    classDef ffi fill:#f88,stroke:#c44,color:#fff
+    classDef zig fill:#f7a41d,stroke:#c47d15,color:#000
+    classDef capy fill:#7c3aed,stroke:#5b21b6,color:#fff
 ```
 
 **Key Benefits:**
