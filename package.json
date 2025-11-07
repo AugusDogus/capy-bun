@@ -1,6 +1,7 @@
 {
-    "name": "capy-bun",
-    "private": true,
-    "workspaces": ["packages/*"]
-  }
+  "name": "capy-bun",
+  "private": true,
+  "workspaces": ["packages/*"],
+  "license": "MIT"
+}
   

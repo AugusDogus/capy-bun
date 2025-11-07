@@ -1,0 +1,19 @@
+{
+  "name": "@capy-bun/native",
+  "version": "0.0.1",
+  "description": "Native Zig wrapper for Capy UI framework",
+  "private": true,
+  "scripts": {
+    "build": "zig build",
+    "build:release": "zig build -Doptimize=ReleaseFast"
+  },
+  "keywords": [
+    "capy",
+    "ui",
+    "gui",
+    "zig",
+    "native",
+    "ffi"
+  ]
+}
+

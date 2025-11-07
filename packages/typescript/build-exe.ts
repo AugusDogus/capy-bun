@@ -39,17 +39,17 @@ function patchWindowsSubsystem(exePath: string): void {
 }
 
 const distDir = join(import.meta.dir, "dist-exe");
-const nativeLibDir = join(import.meta.dir, "../capy-native/zig-out/bin");
+const nativeLibDir = join(import.meta.dir, "../native/zig-out/bin");
 
 // Determine the native library name based on platform
 const suffix = process.platform === "win32" ? "dll" : process.platform === "darwin" ? "dylib" : "so";
-const nativeLibName = `capy-native.${suffix}`;
+const nativeLibName = `native.${suffix}`;
 
 console.log("Building Capy-TS standalone executable...\n");
 
 // Step 1: Build the native library in release mode (disables logging)
 console.log("Step 1: Building native library in release mode...");
-await $`cd ../capy-native && zig build -Doptimize=ReleaseFast`;
+await $`cd ../native && zig build -Doptimize=ReleaseFast`;
 console.log("✓ Native library built\n");
 
 // Step 2: Create dist directory
@@ -81,5 +81,5 @@ console.log("   - Worker thread: embedded");
 console.log("   - Native library: embedded (extracted to cache on first run)");
 console.log("\nTo run: cd dist-exe && ./capy-hello");
 console.log("\nNote: On first run, the native library will be extracted to:");
-console.log(`  ${join(tmpdir(), "capy-ts-cache", nativeLibName)}`);
+console.log(`  ${join(tmpdir(), "capy-bun-cache", nativeLibName)}`);
 

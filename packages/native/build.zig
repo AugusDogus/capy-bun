@@ -12,7 +12,7 @@ pub fn build(b: *std.Build) !void {
 
     // Build as a shared library with debug symbols
     const lib = b.addSharedLibrary(.{
-        .name = "capy-native",
+        .name = "native",
         .root_source_file = b.path("src/wrapper.zig"),
         .target = target,
         .optimize = optimize,

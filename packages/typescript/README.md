@@ -23,13 +23,13 @@ This package is part of a monorepo. To use it:
 
 1. Build the native library:
 ```bash
-cd packages/capy-native
+cd packages/native
 zig build
 ```
 
 2. Install dependencies:
 ```bash
-cd packages/capy-ts
+cd packages/typescript
 bun install
 ```
 
@@ -224,36 +224,36 @@ See: [Zig's allocator documentation](https://ziglang.org/documentation/master/#C
 This library uses a multi-threaded architecture to keep your JavaScript responsive:
 
 ```
-┌─────────────────────────────────┐
-│   Main JavaScript Thread        │
-│ (Your application code here)    │
-│                                 │
-│  ┌──────────────────────────┐  │
-│  │  TypeScript API Layer    │  │
-│  │  (Window, Label, Button) │  │
-│  └──────────┬───────────────┘  │
-│             │ postMessage       │
-└─────────────┼───────────────────┘
-              │
-┌─────────────┼───────────────────┐
-│             ↓                   │
-│  ┌──────────────────────────┐  │
-│  │   UI Worker Thread       │  │
-│  │ (Runs Capy event loop)   │  │
-│  │                          │  │
-│  │  ┌────────────────────┐  │  │
-│  │  │ FFI Layer (bun:ffi)│  │  │
-│  │  └────────┬───────────┘  │  │
-│  │           ↓              │  │
-│  │  ┌────────────────────┐  │  │
-│  │  │ Zig Wrapper (C ABI)│  │  │
-│  │  └────────┬───────────┘  │  │
-│  │           ↓              │  │
-│  │  ┌────────────────────┐  │  │
-│  │  │ Capy UI (Native)   │  │  │
-│  │  └────────────────────┘  │  │
-│  └──────────────────────────┘  │
-└─────────────────────────────────┘
+┌───────────────────────────────────┐
+│    Main JavaScript Thread         │
+│  (Your application code here)     │
+│                                   │
+│  ┌────────────────────────────┐  │
+│  │  TypeScript API Layer      │  │
+│  │  (Window, Label, Button)   │  │
+│  └─────────────┬──────────────┘  │
+│                │ postMessage      │
+└────────────────┼──────────────────┘
+                 │
+┌────────────────▼──────────────────┐
+│                                   │
+│  ┌────────────────────────────┐  │
+│  │    UI Worker Thread        │  │
+│  │  (Runs Capy event loop)    │  │
+│  │                            │  │
+│  │  ┌──────────────────────┐  │  │
+│  │  │ FFI Layer (bun:ffi)  │  │  │
+│  │  └──────────┬───────────┘  │  │
+│  │             ↓              │  │
+│  │  ┌──────────────────────┐  │  │
+│  │  │ Zig Wrapper (C ABI)  │  │  │
+│  │  └──────────┬───────────┘  │  │
+│  │             ↓              │  │
+│  │  ┌──────────────────────┐  │  │
+│  │  │  Capy UI (Native)    │  │  │
+│  │  └──────────────────────┘  │  │
+│  └────────────────────────────┘  │
+└───────────────────────────────────┘
 ```
 
 **Key Benefits:**

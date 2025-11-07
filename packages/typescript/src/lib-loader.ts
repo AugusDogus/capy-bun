@@ -10,13 +10,13 @@ import { dirname, join } from "path";
 // Import the native library as an embedded file (static import for bundling)
 // We conditionally import based on what exists at build time
 // @ts-ignore - This will be resolved by Bun during bundling
-import embeddedLib from "../../capy-native/zig-out/bin/capy-native.dll" with { type: "file" };
+import embeddedLib from "../../native/zig-out/bin/native.dll" with { type: "file" };
 
-const libName = `capy-native.${suffix}`;
+const libName = `native.${suffix}`;
 
 export async function loadNativeLibrary(): Promise<string> {
   // Check if we're in development mode (source files exist)
-  const devPath = join(import.meta.dir, "../../capy-native/zig-out/bin", libName);
+  const devPath = join(import.meta.dir, "../../native/zig-out/bin", libName);
   if (existsSync(devPath)) {
     // Development mode: use the library directly from the filesystem
     return devPath;
@@ -40,7 +40,7 @@ export async function loadNativeLibrary(): Promise<string> {
   
   // Production mode: extract from bundle
   // Create a persistent cache directory instead of using temp
-  const cacheDir = join(tmpdir(), "capy-ts-cache");
+  const cacheDir = join(tmpdir(), "capy-bun-cache");
   if (!existsSync(cacheDir)) {
     mkdirSync(cacheDir, { recursive: true });
   }

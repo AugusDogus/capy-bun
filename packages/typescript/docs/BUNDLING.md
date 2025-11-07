@@ -18,13 +18,11 @@ We use a hybrid approach:
 
 ### 1. Import as Embedded Asset
 
-In `src/lib-loader.ts`, we dynamically import the native library:
+In `src/lib-loader.ts`, we statically import the native library:
 
 ```typescript
 // This import tells Bun to embed the file in the executable
-const imported = await import(`../../capy-native/zig-out/bin/${libName}`, 
-  { with: { type: "file" } });
-const embeddedLib = imported.default;
+import embeddedLib from "../../native/zig-out/bin/native.dll" with { type: "file" };
 ```
 
 ### 2. Extract to Cache
@@ -32,7 +30,7 @@ const embeddedLib = imported.default;
 On first run, we extract the embedded library:
 
 ```typescript
-const cacheDir = join(tmpdir(), "capy-ts-cache");
+const cacheDir = join(tmpdir(), "capy-bun-cache");
 const extractedPath = join(cacheDir, libName);
 
 const libData = await Bun.file(embeddedLib).arrayBuffer();
@@ -71,15 +69,15 @@ The resulting executable opens without a console window, making it perfect for e
 ## Cache Location
 
 The native library is extracted to:
-- **Windows**: `%TEMP%\capy-ts-cache\capy-native.dll`
-- **macOS**: `/tmp/capy-ts-cache/libcapy-native.dylib`
-- **Linux**: `/tmp/capy-ts-cache/libcapy-native.so`
+- **Windows**: `%TEMP%\capy-bun-cache\native.dll`
+- **macOS**: `/tmp/capy-bun-cache/libnative.dylib`
+- **Linux**: `/tmp/capy-bun-cache/libnative.so`
 
 ## Development vs Production
 
 The loader automatically detects the environment:
 
-- **Development**: Uses the library directly from `packages/capy-native/zig-out/bin/`
+- **Development**: Uses the library directly from `packages/native/zig-out/bin/`
 - **Production**: Extracts from the embedded bundle
 
 ## Trade-offs

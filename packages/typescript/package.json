@@ -1,5 +1,5 @@
 {
-  "name": "capy-ts",
+  "name": "@capy-bun/typescript",
   "version": "0.0.1",
   "description": "TypeScript bindings for capy UI framework using Bun FFI",
   "type": "module",

@@ -14,18 +14,18 @@ A proof-of-concept that demonstrates:
 
 | Package | Description |
 |---------|-------------|
-| **[capy-native](packages/capy-native/)** | Zig wrapper that exposes Capy UI through a C ABI for FFI consumption |
-| **[capy-ts](packages/capy-ts/)** | TypeScript library with Bun FFI bindings and async API |
+| **[native](packages/native/)** | Zig wrapper that exposes Capy UI through a C ABI for FFI consumption |
+| **[typescript](packages/typescript/)** | TypeScript library with Bun FFI bindings and async API |
 
 ## Quick Start
 
 ```bash
 # 1. Build the native library
-cd packages/capy-native
+cd packages/native
 zig build -Doptimize=ReleaseFast
 
 # 2. Run an example
-cd ../capy-ts
+cd ../typescript
 bun run examples/hello-world.ts
 ```
 
@@ -35,52 +35,52 @@ bun run examples/hello-world.ts
 
 For complete API documentation, guides, and examples, see:
 
-**[capy-ts README](packages/capy-ts/README.md)** - Complete user documentation
+**[typescript README](packages/typescript/README.md)** - Complete user documentation
 
 Quick links:
-- [API Reference](packages/capy-ts/README.md#api-reference)
-- [Widget Documentation](packages/capy-ts/README.md#widgets)
-- [Building Executables](packages/capy-ts/README.md#build-standalone-executable)
-- [Architecture Details](packages/capy-ts/README.md#architecture)
+- [API Reference](packages/typescript/README.md#api-reference)
+- [Widget Documentation](packages/typescript/README.md#widgets)
+- [Building Executables](packages/typescript/README.md#build-standalone-executable)
+- [Architecture Details](packages/typescript/README.md#architecture)
 
 ## Architecture
 
 ```
-┌──────────────────────────────────────────────┐
-│         Your TypeScript App                  │
-│      (packages/capy-ts/examples)             │
-└──────────────────┬───────────────────────────┘
-                   │ import
-┌──────────────────▼───────────────────────────┐
-│        TypeScript API Layer                  │
-│     (packages/capy-ts/src/*.ts)              │
-│  • Window, Label, Button, TextField          │
-│  • Row, Column, Alignment                    │
-│  • Async/await API with Worker thread        │
-└──────────────────┬───────────────────────────┘
-                   │ Bun Worker (postMessage)
-┌──────────────────▼───────────────────────────┐
-│          UI Worker Thread                    │
-│   (packages/capy-ts/src/ui-worker.ts)        │
-│  • Runs Capy event loop                      │
-│  • Handles FFI calls                         │
-│  • Manages callbacks                         │
-└──────────────────┬───────────────────────────┘
-                   │ Bun FFI (dlopen)
-┌──────────────────▼───────────────────────────┐
-│       Native Shared Library                  │
-│  (packages/capy-native/src/wrapper.zig)      │
-│  • C ABI exports                             │
-│  • Memory management                         │
-│  • Callback bridging                         │
-└──────────────────┬───────────────────────────┘
-                   │ Zig imports
-┌──────────────────▼───────────────────────────┐
-│         Capy UI Framework                    │
-│      (github.com/capy-ui/capy)               │
-│  • Native UI controls                        │
-│  • Platform backends (Win32/GTK/AppKit)      │
-└──────────────────────────────────────────────┘
+┌────────────────────────────────────────────────┐
+│          Your TypeScript App                   │
+│       (packages/typescript/examples)           │
+└───────────────────┬────────────────────────────┘
+                    │ import
+┌───────────────────▼────────────────────────────┐
+│         TypeScript API Layer                   │
+│      (packages/typescript/src/*.ts)            │
+│   • Window, Label, Button, TextField           │
+│   • Row, Column, Alignment                     │
+│   • Async/await API with Worker thread         │
+└───────────────────┬────────────────────────────┘
+                    │ Bun Worker (postMessage)
+┌───────────────────▼────────────────────────────┐
+│           UI Worker Thread                     │
+│    (packages/typescript/src/ui-worker.ts)      │
+│   • Runs Capy event loop                       │
+│   • Handles FFI calls                          │
+│   • Manages callbacks                          │
+└───────────────────┬────────────────────────────┘
+                    │ Bun FFI (dlopen)
+┌───────────────────▼────────────────────────────┐
+│        Native Shared Library                   │
+│     (packages/native/src/wrapper.zig)          │
+│   • C ABI exports                              │
+│   • Memory management                          │
+│   • Callback bridging                          │
+└───────────────────┬────────────────────────────┘
+                    │ Zig imports
+┌───────────────────▼────────────────────────────┐
+│          Capy UI Framework                     │
+│       (github.com/capy-ui/capy)                │
+│   • Native UI controls                         │
+│   • Platform backends (Win32/GTK/AppKit)       │
+└────────────────────────────────────────────────┘
 ```
 
 ## Example Code
@@ -106,7 +106,7 @@ await window.setChild(row);
 await window.show();
 ```
 
-See [examples/](packages/capy-ts/examples/) for more complete examples.
+See [examples/](packages/typescript/examples/) for more complete examples.
 
 ## Features
 
@@ -118,7 +118,7 @@ See [examples/](packages/capy-ts/examples/) for more complete examples.
 
 ## Contributing
 
-This is a proof-of-concept with room for expansion! See the [Contributing section](packages/capy-ts/README.md#contributing) in capy-ts for ideas.
+This is a proof-of-concept with room for expansion! See the [Contributing section](packages/typescript/README.md#contributing) for ideas.
 
 ## License
 

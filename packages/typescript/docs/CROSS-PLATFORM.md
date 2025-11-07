@@ -67,11 +67,11 @@ jobs:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v1
       - uses: goto-bus-stop/setup-zig@v2
-      - run: cd packages/capy-ts && bun run build:exe
+      - run: cd packages/typescript && bun run build:exe
       - uses: actions/upload-artifact@v4
         with:
           name: capy-hello-windows
-          path: packages/capy-ts/dist-exe/capy-hello.exe
+          path: packages/typescript/dist-exe/capy-hello.exe
 
   build-linux:
     runs-on: ubuntu-latest
@@ -82,11 +82,11 @@ jobs:
       - run: |
           sudo apt-get update
           sudo apt-get install -y libgtk-4-dev
-      - run: cd packages/capy-ts && bun run build:exe
+      - run: cd packages/typescript && bun run build:exe
       - uses: actions/upload-artifact@v4
         with:
           name: capy-hello-linux
-          path: packages/capy-ts/dist-exe/capy-hello
+          path: packages/typescript/dist-exe/capy-hello
 
   build-macos:
     runs-on: macos-latest
@@ -94,11 +94,11 @@ jobs:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v1
       - uses: goto-bus-stop/setup-zig@v2
-      - run: cd packages/capy-ts && bun run build:exe
+      - run: cd packages/typescript && bun run build:exe
       - uses: actions/upload-artifact@v4
         with:
           name: capy-hello-macos
-          path: packages/capy-ts/dist-exe/capy-hello
+          path: packages/typescript/dist-exe/capy-hello
 ```
 
 ## Future: True Cross-Compilation

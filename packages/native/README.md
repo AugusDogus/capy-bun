@@ -4,7 +4,7 @@ A Zig wrapper library that exposes the [Capy UI framework](https://capy-ui.org/)
 
 ## Overview
 
-This package provides a native shared library (`.dll`, `.dylib`, or `.so`) that wraps Capy UI's functionality, making it accessible from other languages via FFI. It's specifically designed to be consumed by the `capy-ts` TypeScript package.
+This package provides a native shared library (`.dll`, `.dylib`, or `.so`) that wraps Capy UI's functionality, making it accessible from other languages via FFI. It's specifically designed to be consumed by the `typescript` TypeScript package.
 
 ## Building
 
@@ -23,9 +23,9 @@ zig build -Doptimize=ReleaseFast
 ```
 
 The compiled library will be in `zig-out/bin/`:
-- Windows: `capy-native.dll`
-- macOS: `libcapy-native.dylib`
-- Linux: `libcapy-native.so`
+- Windows: `native.dll`
+- macOS: `libnative.dylib`
+- Linux: `libnative.so`
 
 ## Architecture
 
@@ -105,7 +105,7 @@ To add new widgets or functionality:
 2. Use opaque pointers for type safety
 3. Handle errors gracefully (return error codes or null)
 4. Track allocated resources for cleanup
-5. Update the corresponding FFI bindings in `capy-ts`
+5. Update the corresponding FFI bindings in `typescript`
 
 ## License
 
