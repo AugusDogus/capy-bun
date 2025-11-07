@@ -1,0 +1,6 @@
+{
+    "name": "capy-bun",
+    "private": true,
+    "workspaces": ["packages/*"]
+  }
+  

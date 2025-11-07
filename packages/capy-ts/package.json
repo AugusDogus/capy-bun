@@ -1,0 +1,38 @@
+{
+  "name": "capy-ts",
+  "version": "0.0.1",
+  "description": "TypeScript bindings for capy UI framework using Bun FFI",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./src/index.ts",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "example:hello-world": "bun run examples/hello-world.ts",
+    "example:button": "bun run examples/button-example.ts",
+    "build:exe": "bun run build-exe.ts"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "typescript": "^5"
+  },
+  "peerDependencies": {
+    "bun": "^1.0.0"
+  },
+  "keywords": [
+    "capy",
+    "ui",
+    "gui",
+    "ffi",
+    "bun",
+    "native",
+    "cross-platform"
+  ]
+}
+
